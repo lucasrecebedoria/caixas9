@@ -1,55 +1,24 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | MoveBuss Caixa</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-  <script defer src="firebase.js"></script>
-  <script defer src="utils.js"></script>
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('loginForm');
-      const msg = document.getElementById('msg');
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msg.textContent = 'Entrando...';
-        const matricula = form.matricula.value.trim();
-        const senha = form.senha.value;
-        try {
-          // Login por matrícula: usamos e-mail sintético matricula@movebuss.app
-          const email = matricula + '@movebuss.app';
-          await firebase.auth().signInWithEmailAndPassword(email, senha);
-          msg.textContent = 'Login OK, redirecionando...';
-          location.href = 'app.html';
-        } catch (err) {
-          msg.textContent = traduzErro(err);
-        }
-      });
-      document.getElementById('toRegister').addEventListener('click', () => location.href='register.html');
-      firebase.auth().onAuthStateChanged((user)=>{
-        if(user) location.href='app.html';
-      });
-    });
-  </script>
-</head>
-<body class="bg">
-  <div class="auth-card">
-    <img src="assets/logo.png" alt="logo" class="logo">
-    <h1>Login</h1>
-    <form id="loginForm">
-      <label>Matrícula</label>
-      <input name="matricula" inputmode="numeric" pattern="\\d{3,6}" required placeholder="Ex: 70029">
-      <label>Senha</label>
-      <input name="senha" type="password" required>
-      <button type="submit" class="btn">Entrar</button>
-      <div id="msg" class="msg"></div>
-    </form>
-    <button id="toRegister" class="link">Criar conta</button>
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><title>Login • MoveBuss</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<header class="header no-print">
+  <div class="brand"><img src="logo.png" alt="logo"/><span>MoveBuss • Login</span></div>
+</header>
+<main class="content">
+  <div class="card" style="max-width:520px;margin:0 auto">
+    <h2>Acessar</h2>
+    <div class="form">
+      <label>Matrícula
+        <input id="matricula" class="input" placeholder="ex: 70029" inputmode="numeric">
+      </label>
+      <label>Senha
+        <input id="senha" type="password" class="input" placeholder="••••••">
+      </label>
+      <button id="loginBtn" class="btn">Entrar</button>
+      <div class="footer-note">Não tem conta? <a href="register.html">Criar agora</a></div>
+    </div>
   </div>
-</body>
-</html>
+</main>
+<script type="module" src="login.js"></script>
+</body></html>

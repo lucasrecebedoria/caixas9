@@ -1,0 +1,32 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><title>Relatórios • MoveBuss</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<header class="header no-print">
+  <div class="brand"><img src="logo.png" alt="logo"/><span>Relatórios de Caixas</span></div>
+  <div class="actions">
+    <a href="home.html" class="btn ghost">Voltar</a>
+    <button id="exportCsv" class="btn ghost">Exportar CSV</button>
+    <button id="printPdf" class="btn">Exportar PDF</button>
+  </div>
+</header>
+<main class="content">
+  <div class="card">
+    <div class="grid3">
+      <label>Data (filtro)
+        <input id="filtroData" type="date" class="input">
+      </label>
+      <label>Somente minha matrícula
+        <select id="meusApenas" class="input">
+          <option value="1">Sim</option>
+          <option value="0">Não</option>
+        </select>
+      </label>
+      <div style="display:flex; align-items:end"><button id="aplicarFiltro" class="btn">Aplicar</button></div>
+    </div>
+  </div>
+  <div id="totaisTop" class="kpi" style="margin-top:14px"></div>
+  <div id="lista" style="margin-top:14px"></div>
+</main>
+<script type="module" src="relatorios.js"></script>
+</body></html>

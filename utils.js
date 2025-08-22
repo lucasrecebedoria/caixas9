@@ -1,20 +1,15 @@
-function traduzErro(err){
-  const m = err && err.message ? err.message : String(err);
-  if(m.includes('auth/user-not-found')) return 'Usuário não encontrado.';
-  if(m.includes('auth/wrong-password')) return 'Senha incorreta.';
-  if(m.includes('auth/email-already-in-use')) return 'Matrícula já cadastrada.';
-  return 'Erro: ' + m;
+export const ADMINS = ["4144","70029","6266"];
+
+export function getUser(){
+  try{ return JSON.parse(localStorage.getItem("user")||"null"); }catch(e){ return null; }
 }
-function hojeStr(){
-  const d = new Date(); d.setHours(0,0,0,0);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return `${yyyy}-${mm}-${dd}`;
+export function guard(){
+  const u=getUser(); if(!u){ location.href="login.html"; return null; } return u;
 }
-function dataStr(d){
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return `${yyyy}-${mm}-${dd}`;
+export function formatBR(d=new Date()){
+  return new Intl.DateTimeFormat('pt-BR').format(d);
 }
+export function todayKey(){
+  const d=new Date(); return d.toISOString().slice(0,10); // YYYY-MM-DD
+}
+export function money(n){ return (Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }

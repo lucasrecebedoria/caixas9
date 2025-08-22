@@ -1,0 +1,27 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><title>Resumo • MoveBuss</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<header class="header no-print">
+  <div class="brand"><img src="logo.png" alt="logo"/><span>Resumo do Caixa</span></div>
+  <div class="actions">
+    <a href="home.html" class="btn ghost">Voltar</a>
+    <button id="printResumo" class="btn">Imprimir</button>
+  </div>
+</header>
+<main class="content">
+  <div class="card">
+    <div class="grid3">
+      <label>Data
+        <input id="dia" type="date" class="input">
+      </label>
+      <label>Matrícula
+        <input id="mat" class="input" placeholder="Deixe vazio para todos (admin)">
+      </label>
+      <div style="display:flex; align-items:end"><button id="carregar" class="btn">Carregar</button></div>
+    </div>
+  </div>
+  <div id="painel" class="card" style="margin-top:14px"></div>
+</main>
+<script type="module" src="resumo.js"></script>
+</body></html>

@@ -1,0 +1,82 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><title>Home • MoveBuss</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<header class="header no-print">
+  <div class="brand"><img src="logo.png" alt="logo"/><span>MoveBuss • Caixa</span></div>
+  <div class="actions">
+    <button id="changePassBtn" class="btn ghost">Alterar Senha</button>
+    <button id="logoutBtn" class="btn">Sair</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar no-print">
+    <div id="userBadge" class="badge green">Carregando...</div>
+    <nav class="menu" style="margin-top:14px">
+      <button id="openBoxBtn">Abrir Caixa</button>
+      <button id="closeBoxBtn">Fechar Caixa</button>
+      <button id="abastecerBtn" class="hidden">Abastecimento</button>
+      <a class="link" href="relatorios.html">Relatórios</a>
+      <a class="link" href="resumo.html">Resumo do Caixa</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="card">
+      <h2>Status do Caixa</h2>
+      <div class="kpi">
+        <div class="pill">Data: <span id="hoje"></span></div>
+        <div class="pill">Situação: <span id="situacao">—</span></div>
+        <div class="pill">Caixa ID: <span id="caixaId">—</span></div>
+      </div>
+    </div>
+
+    <div id="abastecimentoCard" class="card" style="margin-top:16px; display:none">
+      <h2>Novo Abastecimento</h2>
+      <form id="formAb" class="form">
+        <div class="grid3">
+          <label>Tipo de Validador
+            <select id="validador" class="input" required>
+              <option value="PRODATA">PRODATA</option>
+              <option value="DIGICON">DIGICON</option>
+            </select>
+          </label>
+          <label>Quantidade de Bordos
+            <input id="bordos" type="number" class="input" min="1" required>
+          </label>
+          <label>Valor (R$)
+            <input id="valor" class="input" readonly>
+          </label>
+        </div>
+        <div class="grid3">
+          <label>Prefixo
+            <div style="display:flex; gap:6px; align-items:center">
+              <span class="pill">55</span>
+              <input id="prefixo" class="input" maxlength="3" placeholder="___" pattern="\d{3}" required>
+            </div>
+          </label>
+          <label>Data
+            <input id="data" class="input" readonly>
+          </label>
+          <label>Matrícula Motorista
+            <input id="matMotorista" class="input" required>
+          </label>
+        </div>
+        <div class="grid2">
+          <label>Matrícula Recebedor
+            <input id="matRecebedor" class="input" readonly>
+          </label>
+          <label>Observações (opcional)
+            <input id="obs" class="input" placeholder="—">
+          </label>
+        </div>
+        <div style="display:flex; gap:10px">
+          <button class="btn" type="submit">Salvar & Imprimir</button>
+          <button class="btn ghost" type="button" id="sangriaBtn">Sangria</button>
+        </div>
+      </form>
+      <div class="footer-note">Valor é calculado automaticamente: bordos × 5. Não é possível editar.</div>
+    </div>
+  </main>
+</div>
+<script type="module" src="home.js"></script>
+</body></html>

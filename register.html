@@ -1,60 +1,27 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cadastro | MoveBuss Caixa</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-  <script defer src="firebase.js"></script>
-  <script defer src="utils.js"></script>
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('regForm');
-      const msg = document.getElementById('msg');
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msg.textContent = 'Cadastrando...';
-        const matricula = form.matricula.value.trim();
-        const nome = form.nome.value.trim();
-        const senha = form.senha.value;
-        const email = matricula + '@movebuss.app';
-        try {
-          const cred = await firebase.auth().createUserWithEmailAndPassword(email, senha);
-          // Define papel: admin se matrícula estiver na lista
-          const adminMatriculas = ['4144', '70029', '6266'];
-          const papel = adminMatriculas.includes(matricula) ? 'admin' : 'user';
-          await firebase.firestore().collection('usuarios').doc(cred.user.uid).set({
-            uid: cred.user.uid, matricula, nome, papel, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
-          msg.textContent = 'Cadastro realizado! Redirecionando para login...';
-          await firebase.auth().signOut();
-          location.href='login.html';
-        } catch (err) {
-          msg.textContent = traduzErro(err);
-        }
-      });
-      document.getElementById('toLogin').addEventListener('click', ()=> location.href='login.html');
-    });
-  </script>
-</head>
-<body class="bg">
-  <div class="auth-card">
-    <img src="assets/logo.png" alt="logo" class="logo">
-    <h1>Criar conta</h1>
-    <form id="regForm">
-      <label>Matrícula</label>
-      <input name="matricula" inputmode="numeric" pattern="\\d{3,6}" required>
-      <label>Nome</label>
-      <input name="nome" required>
-      <label>Senha</label>
-      <input name="senha" type="password" minlength="6" required>
-      <button type="submit" class="btn">Cadastrar</button>
-      <div id="msg" class="msg"></div>
-    </form>
-    <button id="toLogin" class="link">Já tenho conta</button>
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><title>Registrar • MoveBuss</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<header class="header no-print">
+  <div class="brand"><img src="logo.png" alt="logo"/><span>MoveBuss • Registro</span></div>
+</header>
+<main class="content">
+  <div class="card" style="max-width:520px;margin:0 auto">
+    <h2>Criar conta</h2>
+    <div class="form">
+      <label>Matrícula
+        <input id="matricula" class="input" placeholder="ex: 70029" inputmode="numeric">
+      </label>
+      <label>Nome
+        <input id="nome" class="input" placeholder="Seu nome completo">
+      </label>
+      <label>Senha
+        <input id="senha" type="password" class="input" placeholder="Crie uma senha">
+      </label>
+      <button id="registerBtn" class="btn">Registrar</button>
+      <div class="footer-note">Já possui? <a href="login.html">Fazer login</a></div>
+    </div>
   </div>
-</body>
-</html>
+</main>
+<script type="module" src="register.js"></script>
+</body></html>
