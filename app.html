@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caixa | MoveBuss</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script defer src="firebase.js"></script>
+  <script defer src="utils.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body class="bg app-body">
+  <header class="topbar">
+    <button id="menuBtn" class="hamburger" title="Menu">&#9776;</button>
+    <div class="brand"><img src="assets/logo.png" class="brand-logo"> <span>MoveBuss | Caixa</span></div>
+    <div class="userbox">
+      <span id="userBadge" class="badge">Visitante</span>
+      <button id="changePwd" class="btn small">Alterar senha</button>
+      <button id="logout" class="btn small danger">Sair</button>
+    </div>
+  </header>
+
+  <aside id="drawer" class="drawer hidden">
+    <a href="#" data-view="abastecimento">Abastecimento</a>
+    <a href="#" data-view="relatorios">Relatórios</a>
+  </aside>
+
+  <main class="content">
+    <section id="boxControls" class="card">
+      <h2>Controle de Caixa</h2>
+      <div id="boxStatus" class="msg">Verificando...</div>
+      <div class="actions">
+        <button id="openBox" class="btn">Abrir caixa</button>
+        <button id="closeBox" class="btn danger">Fechar caixa</button>
+      </div>
+    </section>
+
+    <section id="abastecimentoView" class="card hidden">
+      <h2>Registrar Abastecimento</h2>
+      <form id="absForm">
+        <div class="grid">
+          <label>Tipo de validador</label>
+          <select name="validador" required>
+            <option value="PRODATA">PRODATA</option>
+            <option value="DIGICON">DIGICON</option>
+          </select>
+
+          <label>Quantidade de bordos</label>
+          <input name="qtd" type="number" min="1" required>
+
+          <label>Valor (R$)</label>
+          <input name="valor" type="number" step="0.01" readonly>
+
+          <label>Prefixo (fixo 55 + 3 dígitos)</label>
+          <div class="prefixo"><span>55</span><input name="prefixo" maxlength="3" pattern="\\d{3}" required></div>
+
+          <label>Data</label>
+          <input name="data" type="date" required>
+
+          <label>Matrícula motorista</label>
+          <input name="matMotorista" inputmode="numeric" pattern="\\d{3,6}" required>
+
+          <label>Matrícula recebedor</label>
+          <input name="matRecebedor" readonly>
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">Salvar & Imprimir recibo</button>
+        </div>
+        <div id="absMsg" class="msg"></div>
+      </form>
+
+      <div class="card sub">
+        <h3>Sangria</h3>
+        <form id="sangriaForm">
+          <div class="grid">
+            <label>Valor a ser sangrado (R$)</label>
+            <input name="valor" type="number" min="0" step="0.01" required>
+            <label>Motivo sangria</label>
+            <input name="motivo" required>
+          </div>
+          <div class="actions">
+            <button class="btn outline" type="submit">Solicitar sangria</button>
+          </div>
+          <div id="sangriaMsg" class="msg"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="relatoriosView" class="card hidden">
+      <h2>Relatórios</h2>
+      <div class="filters">
+        <label>Data</label><input type="date" id="filtroData">
+        <button id="exportCSV" class="btn outline small">Exportar CSV</button>
+        <button id="printReport" class="btn outline small">Exportar PDF</button>
+      </div>
+      <div id="relatoriosContainer"></div>
+    </section>
+
+  </main>
+
+  <!-- recibo - impresso automaticamente -->
+  <iframe id="printFrame" class="hidden"></iframe>
+</body>
+</html>
